@@ -100,6 +100,7 @@ config THERMAL_TSENS8974
 	  thermal userspace client when a threshold is reached. Warm/Cool
 	  temperature thresholds can be set independently for each sensor.
 
+<<<<<<< HEAD
 config LIMITS_MONITOR
 	bool "LMH monitor driver"
 	depends on THERMAL
@@ -118,11 +119,16 @@ config LIMITS_LITE_HW
 	 supported by LMH Lite, their throttling intensity and the operating
 	 profiles.
 
+choice
+	prompt "MSM Thermal Monitor Types"
+	default THERMAL_MONITOR
+
 config THERMAL_MONITOR
 	bool "Monitor thermal state and limit CPU Frequency"
 	depends on THERMAL_TSENS8960 || THERMAL_TSENS8974
 	depends on CPU_FREQ || CPU_FREQ_MSM
 	default n
+	depends on CPU_FREQ_MSM
 	help
 	  This enables thermal monitoring capability in the kernel in the
 	  absence of a system wide thermal monitoring entity or until such an
@@ -137,6 +143,16 @@ config SUPPLY_LM_MONITOR
 	 including cpu, gpu and modem, number of cores online and SoC
 	 temperature. Based on these inputs, the driver throttles
 	 apps subsystem.
+
+config INTELLI_THERMAL
+	bool "Better thermal monitor for MSM"
+	depends on THERMAL_TSENS8974
+	depends on CPU_FREQ_MSM
+	help
+	  This enables thermal monitoring capability in the kernel replacing
+	  userspace thermal monitoring altogether.
+
+endchoice
 
 config SPEAR_THERMAL
 	bool "SPEAr thermal sensor driver"
