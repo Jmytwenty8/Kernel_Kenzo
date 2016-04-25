@@ -100,7 +100,10 @@ config THERMAL_TSENS8974
 	  thermal userspace client when a threshold is reached. Warm/Cool
 	  temperature thresholds can be set independently for each sensor.
 
-<<<<<<< HEAD
+choice
+        prompt "MSM Thermal Monitor Types"
+        default THERMAL_MONITOR
+
 config LIMITS_MONITOR
 	bool "LMH monitor driver"
 	depends on THERMAL
@@ -119,9 +122,6 @@ config LIMITS_LITE_HW
 	 supported by LMH Lite, their throttling intensity and the operating
 	 profiles.
 
-choice
-	prompt "MSM Thermal Monitor Types"
-	default THERMAL_MONITOR
 
 config THERMAL_MONITOR
 	bool "Monitor thermal state and limit CPU Frequency"
