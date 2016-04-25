@@ -53,13 +53,13 @@ static struct workqueue_struct *intelliplug_wq;
 static struct workqueue_struct *intelliplug_boost_wq;
 
 static unsigned int intelli_plug_active = 0;
-module_param(intelli_plug_active, uint, 0644);
+module_param(intelli_plug_active, uint, 0664);
 
 static unsigned int touch_boost_active = 1;
-module_param(touch_boost_active, uint, 0644);
+module_param(touch_boost_active, uint, 0664);
 
 static unsigned int nr_run_profile_sel = 0;
-module_param(nr_run_profile_sel, uint, 0644);
+module_param(nr_run_profile_sel, uint, 0664);
 
 //default to something sane rather than zero
 static unsigned int sampling_time = DEF_SAMPLING_MS;
@@ -77,11 +77,14 @@ struct ip_cpu_info {
 static DEFINE_PER_CPU(struct ip_cpu_info, ip_info);
 
 static unsigned int screen_off_max = UINT_MAX;
-module_param(screen_off_max, uint, 0644);
+module_param(screen_off_max, uint, 0664);
 
 #define CAPACITY_RESERVE	50
 
-#if defined(CONFIG_ARCH_MSM8960) || defined(CONFIG_ARCH_APQ8064) || \
+#if defined(CONFIG_ARCH_APQ8084) || defined(CONFIG_ARM64) || \
+defined(CONFIG_ARCH_MSM8916)
+#define THREAD_CAPACITY (430 - CAPACITY_RESERVE)
+#elif defined(CONFIG_ARCH_MSM8960) || defined(CONFIG_ARCH_APQ8064) || \
 defined(CONFIG_ARCH_MSM8974)
 #define THREAD_CAPACITY	(339 - CAPACITY_RESERVE)
 #elif defined(CONFIG_ARCH_MSM8226) || defined (CONFIG_ARCH_MSM8926) || \
@@ -151,10 +154,10 @@ static unsigned int nr_possible_cores;
 module_param(nr_possible_cores, uint, 0444);
 
 static unsigned int cpu_nr_run_threshold = CPU_NR_THRESHOLD;
-module_param(cpu_nr_run_threshold, uint, 0644);
+module_param(cpu_nr_run_threshold, uint, 0664);
 
 static unsigned int nr_run_hysteresis = NR_RUN_HYSTERESIS_QUAD;
-module_param(nr_run_hysteresis, uint, 0644);
+module_param(nr_run_hysteresis, uint, 0664);
 
 static unsigned int nr_run_last;
 
